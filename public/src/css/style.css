@@ -1,0 +1,87 @@
+.card
+{
+    /* overflow-x: scroll; */
+}
+
+.table
+{
+    border-radius: 6px !important;
+}
+
+:root
+{
+    --own-blue: #264653;
+    --own-green: #2a9d8f;
+    --own-yellow: #e9c46a;
+    --own-orange: #f4a261;
+    --own-red: #e76f51;
+}
+
+.logout
+{
+    font-size: 1.2rem;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.white-color 
+{
+    color: var(--grey);
+}
+
+.white-color:hover 
+{
+    color: var(--white);
+}
+
+.own-red
+{
+    color: white;
+    background-color: var(--own-red);
+}
+
+.own-red:hover
+{
+    background-color: white;
+    color: var(--own-red);
+    border: var(--own-red) 1px solid;
+}
+
+.own-yellow
+{
+    color: white;
+    background-color: var(--own-yellow);
+}
+
+.own-yellow:hover
+{
+    background-color: white;
+    color: var(--own-yellow);
+    border: var(--own-yellow) 1px solid;
+}
+
+.own-green
+{
+    color: white;
+    background-color: var(--own-green);
+}
+
+.own-green:hover
+{
+    background-color: white;
+    color: var(--own-green);
+    border: var(--own-green) 1px solid;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
