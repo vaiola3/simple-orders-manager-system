@@ -3,11 +3,6 @@
     /* overflow-x: scroll; */
 }
 
-.table
-{
-    border-radius: 6px !important;
-}
-
 :root
 {
     --own-blue: #264653;
@@ -41,6 +36,8 @@
     color: var(--white);
 }
 
+/* own red */
+
 .own-red
 {
     color: white;
@@ -53,6 +50,8 @@
     color: var(--own-red);
     border: var(--own-red) 1px solid;
 }
+
+/* own yellow */
 
 .own-yellow
 {
@@ -67,6 +66,8 @@
     border: var(--own-yellow) 1px solid;
 }
 
+/* own green */
+
 .own-green
 {
     color: white;
@@ -78,6 +79,63 @@
     background-color: white;
     color: var(--own-green);
     border: var(--own-green) 1px solid;
+}
+
+/* own blue */
+
+.own-blue
+{
+    color: white;
+    background-color: var(--own-blue);
+}
+
+.own-blue:hover
+{
+    background-color: white;
+    color: var(--own-blue);
+    border: var(--own-blue) 1px solid;
+}
+
+/* own orange */
+
+.own-orange
+{
+    color: white;
+    background-color: var(--own-orange);
+}
+
+.own-orange:hover
+{
+    background-color: white;
+    color: var(--own-orange);
+    border: var(--own-orange) 1px solid;
+}
+
+.loading-page
+{
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 1100;
+
+    opacity: 70%;
+
+    /* background-color: var(--own-yellow); */
+    background-color: black;
+    /* background-image: linear-gradient(to right, black , white); */
+}
+
+.spinner-grow
+{
+    width: 3rem;
+    height: 3rem;
+}
+
+.hide
+{
+    display: none !important;
 }
 
 @media (min-width: 768px) {

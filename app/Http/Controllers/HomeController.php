@@ -23,7 +23,20 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $view_name = 'home';
+
+        $args = [
+            // 'clients' => Client::all(),
+            // 'title' => $this->titles[$view_name],
+            'show_options' => true,
+            'inactive_itens_route' => [
+                'link' => route('clients.inactives.index'),
+                'title' => 'Clientes Inativos'
+            ],
+            'current_view' => $view_name
+        ];
+
         // return view('home'); 
-        return view('template.main');
+        return view('template.main', \compact('args'));
     }
 }

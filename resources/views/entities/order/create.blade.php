@@ -1,14 +1,8 @@
-@extends('template.main', [
-    'current_view' => $current_view
-])
+@extends('template.main', compact('args'))
 
 @section('content')
 
-@component('components.title', [
-    'title' => $title,
-    'show_options' => $show_options,
-    'inactive_itens' => $inactive_itens,
-])
+@component('components.title', compact('args'))
 @endcomponent
 
 <h5>create order</h5>

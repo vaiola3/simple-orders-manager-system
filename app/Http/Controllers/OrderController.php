@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Client;
+use App\Models\DeliveryType;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -16,13 +18,13 @@ class OrderController extends Controller
     {
         $args = [
             'title' => 'Listagem das encomendas atuais',
-            'show_options' => true,
+            'show_options' => false,
             'orders' => Order::all(),
             'current_view' => 'order.index',
-            'inactive_itens_route' => route('orders.inactives.index')
+            'inactive_itens_route' => [],
         ];
 
-        return view('entities.order.index', $args);
+        return view('entities.order.index', \compact('args'));
     }
 
     /**
@@ -36,10 +38,9 @@ class OrderController extends Controller
             'title' => 'Cadastrar novo pedido',
             'show_options' => false,
             'current_view' => 'order.create',
-            'inactive_itens' => route('orders.inactives.index')
         ];
 
-        return view('entities.order.create', $args);
+        return view('entities.order.create', \compact('args'));
     }
 
     /**
@@ -72,7 +73,27 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        return "orders edit {$id}";
+        $args = [
+            'title' => 'Listagem das encomendas atuais',
+            'show_options' => false,
+            // 'order' => Order::find($id),
+            'current_view' => 'order.index',
+            'inactive_itens_route' => [],
+        ];
+
+        $order = Order::find($id);
+
+        if (isset($order))
+        {
+            $args['order'] = $order;
+
+            $args['clients'] = Client::all();
+            $args['delivery_types'] = DeliveryType::all();
+
+            return view('entities.order.edit', \compact('args'));
+        }
+
+        return redirect()->route('orders.index');
     }
 
     /**

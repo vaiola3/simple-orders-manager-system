@@ -2,7 +2,7 @@
 
 
 @section('form_content')
-<div class="form-group row">
+{{-- <div class="form-group row">
     <label 
         for="name" 
         class="col-md-4 col-form-label text-md-right">
@@ -15,8 +15,33 @@
             type="text" 
             class="form-control @error('name') is-invalid @enderror" 
             name="name" 
+            value="{{ $args['order']->client['name'] }}" 
             required autocomplete="name" 
             autofocus>
+
+        @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div> --}}
+
+<div class="form-group row">
+    <label 
+        for="name" 
+        class="col-md-4 col-form-label text-md-right">
+        Cliente
+    </label>
+
+    <div class="col-md-6">
+        <select class="form-control" id="exampleFormControlSelect1">
+
+            @foreach ($args['clients'] as $client)
+                <option value="{{ $client->id }}">{{ $client->name }}</option>
+            @endforeach
+
+        </select>
 
         @error('name')
             <span class="invalid-feedback" role="alert">
@@ -28,20 +53,21 @@
 
 <div class="form-group row">
     <label 
-        for="contact" 
+        for="name" 
         class="col-md-4 col-form-label text-md-right">
-        Contato
+        Tipo de Entrega
     </label>
 
     <div class="col-md-6">
-        <input 
-            id="contact" 
-            type="contact" 
-            class="form-control @error('contact') is-invalid @enderror" 
-            name="contact" 
-            required autocomplete="contact">
+        <select class="form-control" id="exampleFormControlSelect1">
 
-        @error('contact')
+            @foreach ($args['delivery_types'] as $delivery_type)
+                <option value="{{ $delivery_type->id }}">{{ $delivery_type->name }}</option>
+            @endforeach
+
+        </select>
+
+        @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

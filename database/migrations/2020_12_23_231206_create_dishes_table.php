@@ -21,6 +21,7 @@ class CreateDishesTable extends Migration
             $table->bigInteger('dish_type_id')->unsigned();
             $table->foreign('dish_type_id')->references('id')->on('dish_types');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

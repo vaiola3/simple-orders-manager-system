@@ -3,18 +3,43 @@
 namespace App\Http\Controllers\Inactive;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    private $titles = [
+        'client.inactives' => 'Listagem dos clientes inativos'
+    ];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Client $client)
     {
-        //
+        $view_name = 'client.inactives';
+
+        $args = [
+            'clients' => $client->onlyTrashed()->get(),
+            'title' => $this->titles[$view_name],
+            'show_options' => true,
+            'inactive_itens_route' => [
+                'link' => route('clients.index'),
+                'title' => 'Voltar'
+            ],
+            'current_view' => $view_name
+        ];
+
+        if ($args['clients']->count())
+        {
+            return view('entities.client.inactives', \compact('args'));
+        }
+        else
+        {
+            return redirect()->route('clients.index');
+        }
     }
 
     /**
@@ -69,7 +94,15 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::onlyTrashed()->find($id);
+
+        if (isset($client))
+        {
+            $client->restore();
+            $client->save();
+        }
+
+        return redirect()->route('clients.inactives.index');
     }
 
     /**

@@ -17,6 +17,8 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('contact');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

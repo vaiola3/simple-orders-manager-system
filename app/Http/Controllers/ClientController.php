@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreClientRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+    private $titles = [
+        'client.index' => 'Listagem dos clientes ativos',
+        'client.create' => 'Cadastrar novo cliente',
+        'client.edit' => 'Editar dados do cliente',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -14,15 +23,20 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $view_name = 'client.index';
+
         $args = [
             'clients' => Client::all(),
-            'title' => 'Listagem dos clientes ativos',
+            'title' => $this->titles[$view_name],
             'show_options' => true,
-            'inactive_itens_route' => 'what is it',
-            'current_view' => 'clients'
+            'inactive_itens_route' => [
+                'link' => route('clients.inactives.index'),
+                'title' => 'Clientes Inativos'
+            ],
+            'current_view' => $view_name
         ];
 
-        return view('entities.client.index', $args);
+        return view('entities.client.index', \compact('args'));
     }
 
     /**
@@ -32,7 +46,15 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $view_name = 'client.create';
+
+        $args = [
+            'title' => $this->titles[$view_name],
+            'show_options' => false,
+            'current_view' => $view_name
+        ];
+
+        return view('entities.client.create', \compact('args'));
     }
 
     /**
@@ -41,9 +63,19 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        //
+        $client = new Client();
+
+        if (isset($client))
+        {
+            $client->name = $request->input('name');
+            $client->contact = $request->input('contact');
+
+            $client->save();
+        }
+
+        return \redirect()->route('clients.index');
     }
 
     /**
@@ -63,9 +95,35 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit($id)
     {
-        //
+        $view_name = 'client.edit';
+
+        $args = [
+            'show_options' => true,
+            'inactive_itens_route' => [
+                'link' => route('clients.index'),
+                'title' => 'Voltar'
+            ],
+            'current_view' => 'client.create',
+        ];
+
+        $client = Client::find($id);
+
+        if(isset($client))
+        {
+            $args['title'] = $this->titles[$view_name];
+            $args['client'] = $client;
+
+            return view('entities.client.edit', \compact('args'));
+        }
+        else
+        {
+            $args['clients'] = Client::all();
+
+            return view('entities.client.index', \compact('args'));
+        }
+
     }
 
     /**
@@ -75,9 +133,19 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(StireClientRequest $request, $id)
     {
-        //
+        $client = Client::find($id);
+
+        if (isset($client))
+        {
+            $client->name = $request->input('name');
+            $client->contact = $request->input('contact');
+
+            $client->save();
+        }
+
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -86,8 +154,28 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+
+        if (isset($client))
+        {
+            if (Order::where('client_id', $id)->count() > 0)
+            {
+                $validator = Validator::make([], []);
+
+                $validator
+                    ->getMessageBag()
+                    ->add('client', "Existem pedidos vinculados ao cliente {$client->name}.");
+
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            else
+            {
+                $client->delete();
+            }
+        }
+
+        return redirect()->route('clients.index');
     }
 }

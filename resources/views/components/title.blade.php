@@ -1,13 +1,13 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">{{ $title ?? '' }}</h1>
+    <h1 class="h2">{{ $args['title'] ?? '' }}</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
 
-        @if ($show_options)
+        @if ($args['show_options'])
         <div class="btn-group mr-2">
             <a 
-                href="{{ $inactive_itens_route ?? ''}}"
-                class="btn btn-sm shadow-none own-red">
-                Listar inativos
+                href="{{ $args['inactive_itens_route']['link'] ?? ''}}"
+                class="btn btn-sm shadow-none own-orange">
+                {{ $args['inactive_itens_route']['title'] ?? ''}}
             </a>
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> --}}
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> --}}

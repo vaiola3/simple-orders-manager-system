@@ -20,8 +20,24 @@
         <!-- Custom styles for this template -->
         <link href="{{ asset('src/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('src/css/dashboard.css') }}" rel="stylesheet">
+
+        <!-- Scripts -->
+        <script src="{{ asset('dist/js/jquery-3.5.1.slim.min.js') }}" defer></script>
+        <script src="{{ asset('src/js/app.js') }}" defer></script>
+        <script src="{{ asset('dist/js/bootstrap.bundle.js') }}" defer></script>
+        <script src="{{ asset('dist/js/feather.min.js') }}" defer></script>
+        {{-- <script src="{{ asset('dist/js/Chart.min.js') }}" defer></script> --}}
+        <script src="{{ asset('src/js/dashboard.js') }}" defer></script>
+        <script src="{{ asset('src/js/script.js') }}" defer></script>
     </head>
     <body>
+        <div 
+            class="loading-page d-flex justify-content-center align-items-center"
+            id="loading">
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+        </div>
 
         @component('components.navbar.top')
         @endcomponent
@@ -29,9 +45,7 @@
         <div class="container-fluid">
             <div class="row">
 
-                @component('components.navbar.left', [
-                    'current_view' => $current_view ?? '',
-                ])
+                @component('components.navbar.left', compact('args'))
                 @endcomponent
 
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" id="app">
@@ -201,13 +215,5 @@
                 </main>
             </div>
         </div>
-        <!-- Scripts -->
-        <script src="{{ asset('dist/js/jquery-3.5.1.slim.min.js') }}" defer></script>
-        <script src="{{ asset('src/js/app.js') }}" defer></script>
-        <script src="{{ asset('dist/js/bootstrap.bundle.js') }}" defer></script>
-        <script src="{{ asset('dist/js/feather.min.js') }}" defer></script>
-        <script src="{{ asset('dist/js/Chart.min.js') }}" defer></script>
-        <script src="{{ asset('src/js/dashboard.js') }}" defer></script>
-        <script src="{{ asset('src/js/script.js') }}" defer></script>
     </body>
 </html>

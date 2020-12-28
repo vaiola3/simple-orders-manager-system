@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Address;
 use Illuminate\Http\Request;
 
-class AdressController extends Controller
+class AddressController extends Controller
 {
+    private $titles = [
+        'address.index' => 'Endereços de',
+        'address.create' => 'Cadastrar novo endereço',
+        'address.edit' => 'Editar dados do endereço',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -41,21 +48,36 @@ class AdressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        //
+        $view_name = 'address.index';
+
+        $client = Client::find($id);
+
+        $args = [
+            'addresses' => Address::where('client_id', $id)->get(),
+            'title' => "{$this->titles[$view_name]} {$client->name}",
+            'show_options' => true,
+            'inactive_itens_route' => [
+                'link' => route('clients.index'),
+                'title' => 'Voltar'
+            ],
+            'current_view' => $view_name
+        ];
+
+        return view('entities.address.index', \compact('args'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit(Address $address)
     {
         //
     }
@@ -64,10 +86,10 @@ class AdressController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Address $address)
     {
         //
     }
@@ -75,10 +97,10 @@ class AdressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy(Address $address)
     {
         //
     }

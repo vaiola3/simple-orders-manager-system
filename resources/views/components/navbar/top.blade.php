@@ -12,7 +12,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="navbar-nav px-3">
+    <ul class="navbar-nav px-4">
 
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="{{ route('home') }}">

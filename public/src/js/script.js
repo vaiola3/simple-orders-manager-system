@@ -40,3 +40,8 @@ $(function ()
 {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+$(window).on('load', function ()
+{
+    $('#loading').addClass('hide');
+})

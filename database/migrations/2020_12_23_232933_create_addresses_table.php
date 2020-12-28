@@ -21,6 +21,7 @@ class CreateAddressesTable extends Migration
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
