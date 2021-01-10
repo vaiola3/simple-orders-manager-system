@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => '/pedidos'], function () {
 
     Route::get('/novo', '\App\Http\Controllers\OrderController@create')
         ->name('orders.create');
+    Route::post('/novo', '\App\Http\Controllers\OrderController@store')
+        ->name('orders.store');
 
     Route::get('/editar/{id}', '\App\Http\Controllers\OrderController@edit')
         ->name('orders.edit');

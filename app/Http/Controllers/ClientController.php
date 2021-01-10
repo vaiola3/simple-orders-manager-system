@@ -65,15 +65,7 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $client = new Client();
-
-        if (isset($client))
-        {
-            $client->name = $request->input('name');
-            $client->contact = $request->input('contact');
-
-            $client->save();
-        }
+        $this->clientRepository->store($request->all());
 
         return \redirect()->route('clients.index');
     }

@@ -2,7 +2,7 @@
     <h1 class="h2">{{ $args['title'] ?? '' }}</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
 
-        @if ($args['tools']['show'])
+        @if ($args['tools']['show'] ?? false)
         <div class="btn-group mr-2">
             <a 
                 href="{{ $args['tools']['link'] ?? ''}}"

@@ -16,7 +16,7 @@
 
 @section('tbody')
 <tbody>
-    @foreach ($args['orders'] as $item)
+    @foreach ($args['pload'] as $item)
     <tr align="center">
         <td>{{ $item->id }}</td>
         <td>{{ $item->client['name'] }}</td>

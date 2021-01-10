@@ -4,7 +4,7 @@
 @section('form_content')
 <div class="form-group row">
     <label 
-        for="name" 
+        for="client_id" 
         class="col-md-4 col-form-label text-md-right">
         Cliente
     </label>
@@ -12,12 +12,18 @@
     <div class="col-md-6">
         <select 
             class="form-control" 
-            id="client"
-            name="client">
+            id="client_id"
+            name="client_id">
 
-            <option selected>Selecione um cliente</option>
+            @if (null !== old('client_id'))
+                <option value="{{ old('client_id') }}" selected>
+                    {{ $args['pload']['client']->find(old('client_id'))['name'] }}
+                </option>
+            @else
+                <option value="" selected>Selecione um cliente</option>
+            @endif
 
-            @foreach ($args['clients'] as $client)
+            @foreach ($args['pload']['client'] as $client)
                 <option value="{{ $client->id }}">{{ $client->name }}</option>
             @endforeach
 
@@ -33,7 +39,7 @@
 
 <div class="form-group row">
     <label 
-        for="delivery_type" 
+        for="delivery_type_id" 
         class="col-md-4 col-form-label text-md-right">
         Tipo de Entrega
     </label>
@@ -41,12 +47,18 @@
     <div class="col-md-6">
         <select 
             class="form-control" 
-            id="delivery_type"
-            name="delivery_type">
+            id="delivery_type_id"
+            name="delivery_type_id">
 
-            <option value="" selected>Selecione um tipo de entrega</option>
+            @if (null !== old('delivery_type_id'))
+                <option value="{{ old('delivery_type_id') }}" selected>
+                    {{ $args['pload']['dtypes']->find(old('delivery_type_id'))['name'] }}
+                </option>
+            @else
+                <option value="" selected>Selecione um tipo de entrega</option>
+            @endif
 
-            @foreach ($args['delivery_types'] as $delivery_type)
+            @foreach ($args['pload']['dtypes'] as $delivery_type)
                 <option value="{{ $delivery_type->id }}">{{ $delivery_type->name }}</option>
             @endforeach
 
@@ -62,7 +74,7 @@
 
 <div class="form-group row">
     <label 
-        for="dishes" 
+        for="dish_id" 
         class="col-md-4 col-form-label text-md-right">
         Pratos
     </label>
@@ -71,10 +83,12 @@
         <select 
             class="overflow-hidden"
             id="select-dishes"
-            name="dishes[]" 
+            name="dish_id[]" 
             multiple="multiple">
 
-            @foreach ($args['dishes'] as $dish)
+            {{-- review this --}}
+
+            @foreach ($args['pload']['dishes'] as $dish)
             <option value="{{ $dish->id }}">{{ $dish->name }}</option>
             @endforeach
 

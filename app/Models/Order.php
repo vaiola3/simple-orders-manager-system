@@ -11,6 +11,11 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = array (
+        'client_id', 
+        'delivery_type_id'
+    );
+
     public function client ()
     {
         return $this->belongsTo('\App\Models\Client');

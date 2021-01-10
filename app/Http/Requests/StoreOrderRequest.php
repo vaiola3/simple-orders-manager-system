@@ -24,23 +24,23 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'client' => 'required',
-            'delivery_type' => 'required',
-            'dishes' => 'required'
+            'client_id' => 'required',
+            'delivery_type_id' => 'required',
+            'dish_id' => 'required'
         ];
     }
 
     /**
- * Get the error messages for the defined validation rules.
- *
- * @return array
- */
-public function messages()
-{
-    return [
-        'client.required' => 'É necessário informar um cliente.',
-        'delivery_type.required' => 'É necessário informar um tipo de entrega.',
-        'dishes.required' => 'É necessário informar os pratos da encomenda.',
-    ];
-}
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'client_id.required' => 'É necessário informar um cliente.',
+            'delivery_type_id.required' => 'É necessário informar um tipo de entrega.',
+            'dish_id.required' => 'É necessário informar os pratos da encomenda.',
+        ];
+    }
 }

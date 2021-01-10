@@ -7,10 +7,21 @@ use App\Models\Order;
 use App\Models\Client;
 use App\Models\DeliveryType;
 use Illuminate\Http\Request;
+use App\Repositories\DishRepository;
+use App\Repositories\OrderRepository;
+use App\Repositories\ClientRepository;
 use App\Http\Requests\StoreOrderRequest;
+use App\Repositories\DeliveryTypeRepository;
 
 class OrderController extends Controller
 {
+    private $orderRepository;
+
+    public function __construct (OrderRepository $orderRepo)
+    {
+        $this->orderRepository = $orderRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,13 +29,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $args = [
+        $args = array (
             'title' => 'Listagem das encomendas atuais',
-            'show_options' => false,
-            'orders' => Order::all(),
-            'current_view' => 'order.index',
-            'inactive_itens_route' => [],
-        ];
+            'scene' => 'order.index',
+            'pload' => $this->orderRepository->findAll(),
+        );
 
         return view('entities.order.index', \compact('args'));
     }
@@ -34,24 +43,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $args = [
+    public function create(
+        ClientRepository $clientRepo,
+        DeliveryTypeRepository $deliveryTypeRepo,
+        DishRepository $dishRepo
+    ){
+        $args = array (
             'title' => 'Cadastrar nova encomenda',
-            'show_options' => false,
-            'current_view' => 'order.index',
-            'inactive_itens_route' => [],
-
-            'clients' => Client::all(),
-            'delivery_types' => DeliveryType::all(),
-            'dishes' => Dish::all(),
-
-            'action_route' => route('orders.store'),
-        ];
-
-        // $args['clients'] = Client::all();
-        // $args['delivery_types'] = DeliveryType::all();
-        // $args['dishes'] = Dish::all();
+            'scene' => 'order.create',
+            'pload' => $this->orderRepository
+                ->getRelatedData($clientRepo, $deliveryTypeRepo, $dishRepo),
+            'after' => route('orders.store')
+        );
 
         return view('entities.order.create', \compact('args'));
     }
@@ -64,15 +67,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $order = new Oder();
-
-        if (isset($order))
-        {
-            $order->client_id = $request->input('client');
-            $order->delivery_type_id = $request->input('delivery_type');
-
-            $order->save();
-        }
+        $this->orderRepository->store($request->all());
 
         return \redirect()->route('orders.index');
     }
