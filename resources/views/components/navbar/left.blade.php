@@ -52,7 +52,7 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item d-flex justify-content-between">
+            <li class="nav-item d-flex justify-content-between">
                 <a class="nav-link @if ($args['current_view'] == 'dishes') active @endif" href="#">
                     <div class="">
                         <span data-feather="layers"></span>
@@ -69,7 +69,7 @@
                         title="Adicionar prato">
                     </span>
                 </a>
-            </li> --}}
+            </li>
 
             <li class="nav-item d-flex justify-content-between">
                 <a 
@@ -94,7 +94,7 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item d-flex justify-content-between">
+            <li class="nav-item d-flex justify-content-between">
                 <a 
                     class="nav-link @if ($args['current_view'] == 'settings') active @endif" 
                     href="#">
@@ -103,7 +103,7 @@
                         Configurações
                     </div>
                 </a>
-            </li> --}}
+            </li>
             
             @if ($errors->any())
                 <ul class="list-group">

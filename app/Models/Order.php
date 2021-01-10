@@ -20,4 +20,9 @@ class Order extends Model
     {
         return $this->belongsTo('\App\Models\DeliveryType');
     }
+
+    public function dishes()
+    {
+        return $this->belongsToMany('\App\Models\Dish', 'order_dish');
+    }
 }

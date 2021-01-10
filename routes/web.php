@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function ()
+{
+    return view('entities.menu.index');
+})->name('menu.index');
 
 Auth::routes();
 
@@ -40,22 +41,22 @@ Route::group(['middleware' => ['auth'], 'prefix' => '/pedidos'], function () {
 
 Route::group(['middleware' => ['auth'], 'prefix' => '/clientes'], function ()
 {
-    Route::get('/ativos', '\App\Http\Controllers\ClientController@index')
+    Route::get('/ativos', [\App\Http\Controllers\ClientController::class, 'index'])
         ->name('clients.index');
 
-    Route::get('/novo', '\App\Http\Controllers\ClientController@create')
+    Route::get('/novo', [\App\Http\Controllers\ClientController::class, 'create'])
         ->name('clients.create');
 
-    Route::post('/novo', '\App\Http\Controllers\ClientController@store')
+    Route::post('/novo', [\App\Http\Controllers\ClientController::class, 'store'])
         ->name('clients.store');
 
-    Route::get('/editar/{id}', '\App\Http\Controllers\ClientController@edit')
+    Route::get('/editar/{id}', [\App\Http\Controllers\ClientController::class, 'edit'])
         ->name('clients.edit');
 
-    Route::post('/editar/{id}', '\App\Http\Controllers\ClientController@update')
+    Route::post('/editar/{id}', [\App\Http\Controllers\ClientController::class, 'update'])
         ->name('clients.update');
 
-    Route::get('/inativar/{id}', '\App\Http\Controllers\ClientController@destroy')
+    Route::get('/inativar/{id}', [\App\Http\Controllers\ClientController::class, 'destroy'])
         ->name('clients.delete');
 
     # client's addresses
@@ -80,13 +81,3 @@ Route::group(['middleware' => ['auth'], 'prefix' => '/clientes'], function ()
     Route::get('ativar/{id}', '\App\Http\Controllers\Inactive\ClientController@update')
         ->name('clients.inactives.update');
 });
-
-// Route::get('/menu', function ()
-// {
-//     return view('entities.menu.index');
-// })->name('menu.index');
-
-// Route::get('/{any}', function ()
-// {
-//     return redirect()->guest('/menu');
-// });

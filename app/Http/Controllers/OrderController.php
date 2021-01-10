@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dish;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\DeliveryType;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreOrderRequest;
 
 class OrderController extends Controller
 {
@@ -35,10 +37,21 @@ class OrderController extends Controller
     public function create()
     {
         $args = [
-            'title' => 'Cadastrar novo pedido',
+            'title' => 'Cadastrar nova encomenda',
             'show_options' => false,
-            'current_view' => 'order.create',
+            'current_view' => 'order.index',
+            'inactive_itens_route' => [],
+
+            'clients' => Client::all(),
+            'delivery_types' => DeliveryType::all(),
+            'dishes' => Dish::all(),
+
+            'action_route' => route('orders.store'),
         ];
+
+        // $args['clients'] = Client::all();
+        // $args['delivery_types'] = DeliveryType::all();
+        // $args['dishes'] = Dish::all();
 
         return view('entities.order.create', \compact('args'));
     }
@@ -49,9 +62,19 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
-        //
+        $order = new Oder();
+
+        if (isset($order))
+        {
+            $order->client_id = $request->input('client');
+            $order->delivery_type_id = $request->input('delivery_type');
+
+            $order->save();
+        }
+
+        return \redirect()->route('orders.index');
     }
 
     /**
@@ -73,27 +96,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $args = [
-            'title' => 'Listagem das encomendas atuais',
-            'show_options' => false,
-            // 'order' => Order::find($id),
-            'current_view' => 'order.index',
-            'inactive_itens_route' => [],
-        ];
-
-        $order = Order::find($id);
-
-        if (isset($order))
-        {
-            $args['order'] = $order;
-
-            $args['clients'] = Client::all();
-            $args['delivery_types'] = DeliveryType::all();
-
-            return view('entities.order.edit', \compact('args'));
-        }
-
-        return redirect()->route('orders.index');
+        //
     }
 
     /**

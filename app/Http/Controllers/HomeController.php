@@ -36,7 +36,6 @@ class HomeController extends Controller
             'current_view' => $view_name
         ];
 
-        // return view('home'); 
         return view('template.main', \compact('args'));
     }
 }

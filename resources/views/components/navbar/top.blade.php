@@ -15,7 +15,7 @@
     <ul class="navbar-nav px-4">
 
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="{{ route('home') }}">
+            <a class="nav-link" id="nav-link-logout" href="{{ route('logout') }}">
                 <div class="logout" id="logout-option">
                     <span class="align-middle" data-feather="log-out"></span>
                     <span class="align-middle">Sair</span>

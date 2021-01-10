@@ -23,7 +23,7 @@ class OrderFactory extends Factory
     {
         return [
             'client_id' => $this->faker->numberBetween(1,5),
-            'delivery_type_id' => $this->faker->numberBetween(1,5),
+            'delivery_type_id' => $this->faker->numberBetween(1,3),
         ];
     }
 }

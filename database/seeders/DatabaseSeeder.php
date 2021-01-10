@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\DishTypeSeeder::class,
             \Database\Seeders\DishSeeder::class,
             \Database\Seeders\DeliverySeeder::class,
+            \Database\Seeders\OrderDishSeeder::class,
         ]);
     }
 }

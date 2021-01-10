@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class ClientController extends Controller
 {
     private $titles = [
-        'client.index' => 'Listagem dos clientes ativos',
+        'client.index'  => 'Listagem dos clientes ativos',
         'client.create' => 'Cadastrar novo cliente',
-        'client.edit' => 'Editar dados do cliente',
+        'client.edit'   => 'Editar dados do cliente',
     ];
 
     /**
@@ -23,17 +23,17 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $view_name = 'client.index';
-
         $args = [
-            'clients' => Client::all(),
-            'title' => $this->titles[$view_name],
-            'show_options' => true,
-            'inactive_itens_route' => [
-                'link' => route('clients.inactives.index'),
+            'title'                 => $this->titles['client.index'],
+            'current_view'          => 'client.index',
+
+            'show_options'          => true,
+            'inactive_itens_route'  => [
+                'link'  => route('clients.inactives.index'),
                 'title' => 'Clientes Inativos'
             ],
-            'current_view' => $view_name
+
+            'clients'               => Client::all(),
         ];
 
         return view('entities.client.index', \compact('args'));
@@ -46,12 +46,11 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $view_name = 'client.create';
-
         $args = [
-            'title' => $this->titles[$view_name],
-            'show_options' => false,
-            'current_view' => $view_name
+            'title'         => $this->titles['client.create'],
+            'current_view'  => 'client.create',
+
+            'show_options'  => false,
         ];
 
         return view('entities.client.create', \compact('args'));
@@ -97,22 +96,20 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $view_name = 'client.edit';
-
         $args = [
-            'show_options' => true,
-            'inactive_itens_route' => [
-                'link' => route('clients.index'),
+            'show_options'          => true,
+            'inactive_itens_route'  => [
+                'link'  => route('clients.index'),
                 'title' => 'Voltar'
             ],
-            'current_view' => 'client.create',
+            'current_view'          => 'client.edit',
         ];
 
         $client = Client::find($id);
 
         if(isset($client))
         {
-            $args['title'] = $this->titles[$view_name];
+            $args['title'] = $this->titles['client.edit'];
             $args['client'] = $client;
 
             return view('entities.client.edit', \compact('args'));

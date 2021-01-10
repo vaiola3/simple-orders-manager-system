@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('clients.create') }}">
+                    <form method="POST" action="{{ $args['action_route'] = null, $args['params'] = null }}">
                         @csrf
                         @yield('form_content')
                     </form>

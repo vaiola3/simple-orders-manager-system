@@ -13,6 +13,9 @@ class DeliveryTypeSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\DeliveryType::factory(5)->create();
+        // \App\Models\DeliveryType::factory(5)->create();
+        \DB::table('delivery_types')->insert(['name' => 'Semanal']);
+        \DB::table('delivery_types')->insert(['name' => 'Quinzenal']);
+        \DB::table('delivery_types')->insert(['name' => 'Mensal']);
     }
 }
