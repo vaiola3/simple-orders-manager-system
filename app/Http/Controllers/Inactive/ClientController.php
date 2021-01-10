@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\Inactive;
 
-use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\ClientRepository;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-    private $titles = [
-        'client.inactives' => 'Listagem dos clientes inativos'
-    ];
+    private $clientRepository;
+
+    public function __construct (ClientRepository $clientRepo)
+    {
+        $this->clientRepository = $clientRepo;
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,24 +26,37 @@ class ClientController extends Controller
     {
         $view_name = 'client.inactives';
 
-        $args = [
-            'clients' => $client->onlyTrashed()->get(),
-            'title' => $this->titles[$view_name],
-            'show_options' => true,
-            'inactive_itens_route' => [
+        $args = array (
+            'title' => 'Listagem dos clientes inativos',
+            'scene' => 'client.inactives',
+            'tools' => array (
+                'show' => true,
                 'link' => route('clients.index'),
-                'title' => 'Voltar'
-            ],
-            'current_view' => $view_name
-        ];
+                'name' => 'Voltar'
+            ),
+            'pload' => $this->clientRepository->inactivesFindAll()
+        );
 
-        if ($args['clients']->count())
+        if ($args['pload']->count())
         {
             return view('entities.client.inactives', \compact('args'));
         }
         else
         {
-            return redirect()->route('clients.index');
+            if (url()->previous() == route('clients.index'))
+            {
+                $validator = Validator::make([], []);
+
+                $validator
+                    ->getMessageBag()
+                    ->add('client', "Não existem clientes inativos.");
+
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            else
+            {
+                return redirect()->route('clients.index');
+            }
         }
     }
 

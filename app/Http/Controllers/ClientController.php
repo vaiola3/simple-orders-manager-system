@@ -6,15 +6,17 @@ use App\Models\Order;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClientRequest;
+use App\Repositories\ClientRepository;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
-    private $titles = [
-        'client.index'  => 'Listagem dos clientes ativos',
-        'client.create' => 'Cadastrar novo cliente',
-        'client.edit'   => 'Editar dados do cliente',
-    ];
+    private $clientRepository;
+
+    public function __construct (ClientRepository $clientRepo)
+    {
+        $this->clientRepository = $clientRepo;
+    }
 
     /**
      * Display a listing of the resource.
@@ -23,18 +25,16 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $args = [
-            'title'                 => $this->titles['client.index'],
-            'current_view'          => 'client.index',
-
-            'show_options'          => true,
-            'inactive_itens_route'  => [
-                'link'  => route('clients.inactives.index'),
-                'title' => 'Clientes Inativos'
-            ],
-
-            'clients'               => Client::all(),
-        ];
+        $args = array (
+            'title' => 'Listagem dos clientes ativos',
+            'scene' => 'client.index',
+            'tools' => array (
+                'show' => true,
+                'link' => route('clients.inactives.index'),
+                'name' => 'Clientes Inativos'
+            ),
+            'pload' => $this->clientRepository->findAll()
+        );
 
         return view('entities.client.index', \compact('args'));
     }
@@ -46,12 +46,13 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $args = [
-            'title'         => $this->titles['client.create'],
-            'current_view'  => 'client.create',
-
-            'show_options'  => false,
-        ];
+        $args = array (
+            'title' => 'Cadastrar novo cliente',
+            'scene' => 'client.create',
+            'tools' => array (
+                'show' => false,
+            ),
+        );
 
         return view('entities.client.create', \compact('args'));
     }
@@ -91,34 +92,32 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  Integer  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $args = [
-            'show_options'          => true,
-            'inactive_itens_route'  => [
-                'link'  => route('clients.index'),
-                'title' => 'Voltar'
-            ],
-            'current_view'          => 'client.edit',
-        ];
+        $args = array (
+            'title' => 'Listagem dos clientes ativos',
+            'scene' => 'client.edit',
+            'tools' => array (
+                'show' => true,
+                'link' => route('clients.index'),
+                'name' => 'Voltar'
+            ),
+            'pload' => $this->clientRepository->findAll(),
+            'tuple' => $this->clientRepository->find($id)
+        );
 
-        $client = Client::find($id);
-
-        if(isset($client))
+        if(isset($args['tuple']))
         {
-            $args['title'] = $this->titles['client.edit'];
-            $args['client'] = $client;
+            $args['title'] = 'Editar dados do cliente';
 
             return view('entities.client.edit', \compact('args'));
         }
         else
         {
-            $args['clients'] = Client::all();
-
-            return view('entities.client.index', \compact('args'));
+            return \redirect()->route('clients.index');
         }
 
     }
@@ -130,17 +129,9 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(StireClientRequest $request, $id)
+    public function update(StoreClientRequest $request, $id)
     {
-        $client = Client::find($id);
-
-        if (isset($client))
-        {
-            $client->name = $request->input('name');
-            $client->contact = $request->input('contact');
-
-            $client->save();
-        }
+        $this->clientRepository->update($request->all(), $id);
 
         return redirect()->route('clients.index');
     }
@@ -153,24 +144,21 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::find($id);
-
-        if (isset($client))
+        if ($this->clientRepository->hasOrders($id))
         {
-            if (Order::where('client_id', $id)->count() > 0)
-            {
-                $validator = Validator::make([], []);
+            $name = $this->clientRepository->getName($id);
 
-                $validator
-                    ->getMessageBag()
-                    ->add('client', "Existem pedidos vinculados ao cliente {$client->name}.");
+            $validator = Validator::make([], []);
 
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-            else
-            {
-                $client->delete();
-            }
+            $validator
+                ->getMessageBag()
+                ->add('client', "Existem pedidos vinculados ao cliente {$name}");
+
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        else
+        {
+            $this->clientRepository->destroy($id);
         }
 
         return redirect()->route('clients.index');

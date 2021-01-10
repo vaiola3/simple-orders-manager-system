@@ -2,12 +2,12 @@
     <h1 class="h2">{{ $args['title'] ?? '' }}</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
 
-        @if ($args['show_options'])
+        @if ($args['tools']['show'])
         <div class="btn-group mr-2">
             <a 
-                href="{{ $args['inactive_itens_route']['link'] ?? ''}}"
+                href="{{ $args['tools']['link'] ?? ''}}"
                 class="btn btn-sm shadow-none own-orange">
-                {{ $args['inactive_itens_route']['title'] ?? ''}}
+                {{ $args['tools']['name'] ?? ''}}
             </a>
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> --}}
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> --}}

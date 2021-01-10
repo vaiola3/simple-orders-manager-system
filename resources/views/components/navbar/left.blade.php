@@ -9,7 +9,7 @@
             </li> -->
             <li class="nav-item d-flex justify-content-between">
                 <a 
-                    class="nav-link container-fluid @if (in_array($args['current_view'], ['client.index', 'client.create'])) active @endif" 
+                    class="nav-link container-fluid @if (in_array($args['scene'], ['client.index', 'client.create'])) active @endif" 
                     href="{{ route('clients.index') }}">
                     <div class="">
                         <span data-feather="users"></span>
@@ -17,7 +17,7 @@
                     </div>
                 </a>
                 <a 
-                    class="nav-link @if ($args['current_view'] == 'client.create') active @endif" 
+                    class="nav-link @if ($args['scene'] == 'client.create') active @endif" 
                     href="{{ route('clients.create') }}">
                     <span 
                         class="align-middle"
@@ -31,7 +31,7 @@
             </li>
             <li class="nav-item d-flex justify-content-between">
                 <a 
-                    class="nav-link @if (in_array($args['current_view'], ['order.index', 'order.create'])) active @endif" 
+                    class="nav-link @if (in_array($args['scene'], ['order.index', 'order.create'])) active @endif" 
                     href="{{ route('orders.index') }}">
                     <div class="">
                         <span data-feather="package"></span>
@@ -39,7 +39,7 @@
                     </div>
                 </a>
                 <a 
-                    class="nav-link @if ($args['current_view'] == 'order.create') active @endif" 
+                    class="nav-link @if ($args['scene'] == 'order.create') active @endif" 
                     href="{{ route('orders.create') }}">
                     <span
                         class="align-middle"
@@ -53,7 +53,7 @@
             </li>
 
             <li class="nav-item d-flex justify-content-between">
-                <a class="nav-link @if ($args['current_view'] == 'dishes') active @endif" href="#">
+                <a class="nav-link @if ($args['scene'] == 'dishes') active @endif" href="#">
                     <div class="">
                         <span data-feather="layers"></span>
                         Pratos
@@ -73,7 +73,7 @@
 
             <li class="nav-item d-flex justify-content-between">
                 <a 
-                    class="nav-link @if ($args['current_view'] == 'deliverys') active @endif" 
+                    class="nav-link @if ($args['scene'] == 'deliverys') active @endif" 
                     href="#">
                     <div class="">
                         <span data-feather="truck"></span>
@@ -81,7 +81,7 @@
                     </div>
                 </a>
                 <a 
-                    class="nav-link @if ($args['current_view'] == 'delivery.create') active @endif" 
+                    class="nav-link @if ($args['scene'] == 'delivery.create') active @endif" 
                     href="#">
                     <span
                         class="align-middle"
@@ -96,7 +96,7 @@
 
             <li class="nav-item d-flex justify-content-between">
                 <a 
-                    class="nav-link @if ($args['current_view'] == 'settings') active @endif" 
+                    class="nav-link @if ($args['scene'] == 'settings') active @endif" 
                     href="#">
                     <div class="">
                         <span data-feather="settings"></span>

@@ -15,7 +15,7 @@
             type="text" 
             class="form-control @error('name') is-invalid @enderror" 
             name="name" 
-            value="{{ $args['client']->name }}" 
+            value="{{ $args['tuple']->name }}" 
             required autocomplete="name" 
             autofocus>
 
@@ -40,7 +40,7 @@
             type="contact" 
             class="form-control @error('contact') is-invalid @enderror" 
             name="contact" 
-            value="{{ $args['client']->contact }}" 
+            value="{{ $args['tuple']->contact }}" 
             required autocomplete="contact">
 
         @error('contact')
