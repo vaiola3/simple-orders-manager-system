@@ -30,8 +30,13 @@ class ClientController extends Controller
             'scene' => 'client.index',
             'tools' => array (
                 'show' => true,
-                'link' => route('clients.inactives.index'),
-                'name' => 'Clientes Inativos'
+                'tool' => array (
+                    array (
+                        'link' => route('clients.inactives.index'),
+                        'name' => 'Listar Inativos',
+                        'tone' => 'own-orange'
+                    ),
+                )
             ),
             'pload' => $this->clientRepository->findAll()
         );
@@ -94,8 +99,13 @@ class ClientController extends Controller
             'scene' => 'client.edit',
             'tools' => array (
                 'show' => true,
-                'link' => route('clients.index'),
-                'name' => 'Voltar'
+                'tool' => array (
+                    array (
+                        'name' => 'Voltar',
+                        'link' => route('clients.index'),
+                        'tone' => 'own-orange'
+                    )
+                )
             ),
             'pload' => $this->clientRepository->findAll(),
             'tuple' => $this->clientRepository->find($id)

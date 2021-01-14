@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\Client;
 
@@ -20,5 +21,10 @@ class ClientRepository extends BaseRepository
     public function getName ($id)
     {
         return $this->model->find($id)->name;
+    }
+
+    public function hasAddresses ($id)
+    {
+        return Address::where('client_id', $id)->count() > 0;
     }
 }

@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\ClientRepository;
 
 class HomeController extends Controller
 {
+    private $clientRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ClientRepository $clientRepo)
     {
         $this->middleware('auth');
+
+        $this->clientRepository = $clientRepo;
     }
 
     /**
@@ -23,18 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $view_name = 'home';
-
-        $args = [
-            // 'clients' => Client::all(),
-            // 'title' => $this->titles[$view_name],
-            'show_options' => true,
-            'inactive_itens_route' => [
+        $args = array (
+            'scene' => 'client.index',
+            'tools' => array (
+                'show' => true,
                 'link' => route('clients.inactives.index'),
-                'title' => 'Clientes Inativos'
-            ],
-            'current_view' => $view_name
-        ];
+                'name' => 'Clientes Inativos'
+            ),
+            'pload' => $this->clientRepository->findAll()
+        );
 
         return view('template.main', \compact('args'));
     }

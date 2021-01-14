@@ -20,7 +20,7 @@
         <td>{{ $item->contact }}</td>
         <td>
             <a 
-                href="{{ route('clients.addresses.show', [$item->id]) }}" 
+                href="{{ route('clients.addresses.index', [$item->id]) }}" 
                 class="btn btn-sm own-green shadow-sm">
                 Endereços
             </a>
@@ -30,7 +30,7 @@
                 Editar
             </a>
             <a 
-                href="{{ route('clients.delete', [$item->id]) }}" 
+                href="{{ route('clients.destroy', [$item->id]) }}" 
                 class="btn btn-sm own-red shadow-sm">
                 Inativar
             </a>

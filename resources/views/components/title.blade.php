@@ -4,11 +4,15 @@
 
         @if ($args['tools']['show'] ?? false)
         <div class="btn-group mr-2">
+
+            @foreach ($args['tools']['tool'] as $tool)
             <a 
-                href="{{ $args['tools']['link'] ?? ''}}"
-                class="btn btn-sm shadow-none own-orange">
-                {{ $args['tools']['name'] ?? ''}}
+                href="{{ $tool['link'] ?? ''}}"
+                class="btn btn-sm shadow-none {{ $tool['tone'] }}">
+                {{ $tool['name'] ?? ''}}
             </a>
+            @endforeach
+
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button> --}}
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> --}}
         </div>

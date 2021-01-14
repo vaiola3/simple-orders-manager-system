@@ -4,6 +4,14 @@ const navSet = {
             'textLogout': document.getElementById('logout-option'),
             'aNavLogout': document.getElementById('nav-link-logout'),
             'formLogout': document.getElementById('logout-form'),
+
+            'textLogin': document.getElementById('login-option'),
+            'aNavLogin': document.getElementById('nav-link-login'),
+            'formLogin': document.getElementById('login-form'),
+
+            'textDashboard': document.getElementById('dashboard-option'),
+            'aNavDashboard': document.getElementById('nav-link-dashboard'),
+            'formDashboard': document.getElementById('dashboard-form'),
         }
     },
     'both': {
@@ -39,12 +47,28 @@ $(navSet.both.elements.allNavLinkItens).each(function (index, value)
     value.addEventListener('selectstart', helperSet.preventDefault)
 })
 
-navSet.top.elements.aNavLogout.addEventListener('click', helperSet.preventDefault)
+//  navSet
 
-navSet.top.elements.textLogout.addEventListener('click', function ()
+if (navSet.top.elements.aNavLogout)
 {
-    navSet.top.elements.formLogout.submit()
-})
+    navSet.top.elements.aNavLogout.addEventListener('click', helperSet.preventDefault)
+}
+
+if (navSet.top.elements.textLogout)
+{
+    navSet.top.elements.textLogout.addEventListener('click', function ()
+    {
+        navSet.top.elements.formLogout.submit()
+    })
+}
+
+if (navSet.top.elements.textLogin)
+{
+    navSet.top.elements.textLogin.addEventListener('click', function ()
+    {
+        navSet.top.elements.formLogin.submit()
+    })
+}
 
 $(function ()
 {

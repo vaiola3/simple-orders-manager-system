@@ -31,8 +31,13 @@ class ClientController extends Controller
             'scene' => 'client.inactives',
             'tools' => array (
                 'show' => true,
-                'link' => route('clients.index'),
-                'name' => 'Voltar'
+                'tool' => array (
+                    array (
+                        'name' => 'Voltar',
+                        'link' => route('clients.index'),
+                        'tone' => 'own-orange'
+                    )
+                )
             ),
             'pload' => $this->clientRepository->inactivesFindAll()
         );

@@ -97,6 +97,17 @@
             <li class="nav-item d-flex justify-content-between">
                 <a 
                     class="nav-link @if ($args['scene'] == 'settings') active @endif" 
+                    href="{{ route('menu.index') }}">
+                    <div class="">
+                        <span data-feather="grid"></span>
+                        Cardápio
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item d-flex justify-content-between">
+                <a 
+                    class="nav-link @if ($args['scene'] == 'settings') active @endif" 
                     href="#">
                     <div class="">
                         <span data-feather="settings"></span>

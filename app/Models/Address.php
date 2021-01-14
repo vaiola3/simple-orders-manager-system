@@ -10,4 +10,6 @@ class Address extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $fillable = array ('description', 'cep', 'client_id');
 }
