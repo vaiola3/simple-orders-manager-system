@@ -26,6 +26,7 @@ class ClientFactory extends Factory
         return [
             'name' => $faker->name,
             'contact' => $faker->cellphoneNumber,
+            'info' => $faker->text($maxNbChars = 200)     
         ];
     }
 }

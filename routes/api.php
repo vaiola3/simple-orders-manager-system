@@ -1,7 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthAPIController;
+use App\Http\Controllers\API\OrderAPIController;
+use App\Http\Controllers\API\ClientAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/auth')->group(function ()
+{
+    Route::post('/login', [AuthAPIController::class, 'login']);
+    Route::get('/logout', [AuthAPIController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('/verify', [AuthAPIController::class, 'verify'])->middleware('auth:sanctum');
+});
+
+Route::middleware('auth:sanctum')->group(function ()
+{
+    Route::prefix('/clients')->group(function ()
+    {
+        Route::get('/', [ClientAPIController::class, 'index']);
+        Route::post('/', [ClientAPIController::class, 'store']);
+
+        Route::get('/{id}', [ClientAPIController::class, 'show']);
+        Route::post('/{id}', [ClientAPIController::class, 'update']);
+        Route::delete('/{id}', [ClientAPIController::class, 'destroy']);
+    });
+
+    Route::prefix('/orders')->group(function ()
+    {
+        Route::get('/', [OrderAPIController::class, 'index']);
+        Route::post('/', [OrderAPIController::class, 'store']);
+
+        Route::get('/{id}', [OrderAPIController::class, 'show']);
+        Route::post('/{id}', [OrderAPIController::class, 'update']);
+        Route::delete('/{id}', [OrderAPIController::class, 'destroy']);
+    });
 });
