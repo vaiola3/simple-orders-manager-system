@@ -33,9 +33,9 @@ class OrderDishSeeder extends Seeder
             'order_id' => 3,
             'dish_id' => 3
         ]);
-        \DB::table('order_dish')->insert([
-            'order_id' => 4,
-            'dish_id' => 2
-        ]);
+        // \DB::table('order_dish')->insert([
+        //     'order_id' => 4,
+        //     'dish_id' => 2
+        // ]);
     }
 }

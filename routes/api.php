@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthAPIController;
 use App\Http\Controllers\API\OrderAPIController;
 use App\Http\Controllers\API\ClientAPIController;
+use App\Http\Controllers\API\AddressAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,25 +26,34 @@ Route::prefix('/auth')->group(function ()
     Route::get('/verify', [AuthAPIController::class, 'verify'])->middleware('auth:sanctum');
 });
 
-Route::middleware('auth:sanctum')->group(function ()
-{
+// Route::middleware('auth:sanctum')->group(function ()
+// {
     Route::prefix('/clients')->group(function ()
     {
         Route::get('/', [ClientAPIController::class, 'index']);
-        Route::post('/', [ClientAPIController::class, 'store']);
+        Route::post('/', [ClientAPIController::class, 'storeClient']);
 
         Route::get('/{id}', [ClientAPIController::class, 'show']);
-        Route::post('/{id}', [ClientAPIController::class, 'update']);
+        Route::put('/{id}', [ClientAPIController::class, 'updateClient']);
         Route::delete('/{id}', [ClientAPIController::class, 'destroy']);
     });
 
     Route::prefix('/orders')->group(function ()
     {
         Route::get('/', [OrderAPIController::class, 'index']);
-        Route::post('/', [OrderAPIController::class, 'store']);
+        Route::post('/', [OrderAPIController::class, 'storeOrder']);
 
         Route::get('/{id}', [OrderAPIController::class, 'show']);
         Route::post('/{id}', [OrderAPIController::class, 'update']);
         Route::delete('/{id}', [OrderAPIController::class, 'destroy']);
     });
-});
+
+    Route::prefix('/addresses')->group(function ()
+    {
+        Route::get('/client/{client_id}', [AddressAPIController::class, 'list']);
+        Route::post('/', [AddressAPIController::class, 'storeAddress']);
+        Route::get('/{id}', [AddressAPIController::class, 'show']);
+        Route::put('/{id}', [AddressAPIController::class, 'updateAddress']);
+        Route::delete('/{id}', [AddressAPIController::class, 'destroy']);
+    });
+// });

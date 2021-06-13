@@ -29,13 +29,4 @@ class StoreClientAddressesRequest extends FormRequest
             'cep' => 'required',
         ];
     }
-
-    public function all ($keys = null)
-    {
-        $data = parent::all($keys);
-
-        $data['client_id'] = $this->route('client_id');
-
-        return $data;
-    }
 }

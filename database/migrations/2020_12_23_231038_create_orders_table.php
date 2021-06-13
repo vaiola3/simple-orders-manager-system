@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('delivery_type_id')->unsigned();
             $table->foreign('delivery_type_id')->references('id')->on('delivery_types');
 
+            $table->text('dishes')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

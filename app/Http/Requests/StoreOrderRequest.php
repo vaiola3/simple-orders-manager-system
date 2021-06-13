@@ -26,7 +26,8 @@ class StoreOrderRequest extends FormRequest
         return [
             'client_id' => 'required',
             'delivery_type_id' => 'required',
-            'dish_id' => 'required'
+            'dishes' => 'string'
+            // 'dish_id' => 'required'
         ];
     }
 

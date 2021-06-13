@@ -13,12 +13,13 @@ class Order extends Model
 
     protected $fillable = array (
         'client_id', 
-        'delivery_type_id'
+        'delivery_type_id',
+        'dishes'
     );
 
     public function client ()
     {
-        return $this->belongsTo('\App\Models\Client');
+        return $this->belongsTo('\App\Models\Client', 'client_id');
     }
 
     public function deliveryType ()
